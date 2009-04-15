@@ -1,4 +1,4 @@
-require 'melon'
+require 'lib/melon'
 
 # Rack config
 use Rack::Static, :urls => ['/css', '/js', '/images', '/html'], :root => 'public'
