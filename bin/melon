@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+
+PUBLIC_DIR = 'public'
+CSS_DIR    = 'css'
+HTML_DIR   = 'html'
+IMAGES_DIR = 'images'
+JS_DIR     = 'js'
+JSON_DIR   = 'json'
+
+# Generate directory structure
+Dir.mkdir( PUBLIC_DIR ) unless File.exists? PUBLIC_DIR
+Dir.chdir( PUBLIC_DIR ) do
+  FileUtils.mkpath( CSS_DIR, HTML_DIR, IMAGES_DIR, JS_DIR, JSON_DIR )
+end
+
