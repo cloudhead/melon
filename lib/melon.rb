@@ -6,16 +6,13 @@ require 'json'
 
 $:.unshift File.dirname(__FILE__)
 
-require 'document'
-require 'router'
-
 # Load modules
 Dir.chdir('lib/modules') do
   puts '* Opening modules/'
   require 'base/model'
   require 'base/controller'
   Dir.new('.').entries.each do |f| 
-    unless File.directory?( f )
+    if File.file?( f ) && f =~ /.rb$/
       puts '* Found ' + f
       require f
     end
@@ -38,6 +35,64 @@ module Melon
     end
   end
   
+  class Router
+    def initialize env
+      @request  = Rack::Request.new env
+      @response = Rack::Response.new
+      @session, path, @input = Session.new( @request.env['rack.session'] ), 
+                               @request.path_info,
+                               @request.params
+      
+      # Parse route from url
+      route = path.
+              split('/').
+              reject { |i| i.empty? }. # Clear empty strings
+              drop(1)                  # Remove /m/
+      
+      # Make sure request was an XHR, and the route is valid
+      if route.size >= 2 && @request.xhr?
+        if defined? route.first.capitalize
+          r *route
+        else
+          r :error, :module
+        end
+      else
+        r :error, :route
+      end
+      
+      #puts
+      #puts "* Path: #@module/#@action/#@key"
+      
+      self
+    end
+    
+    def r *args
+      @module, @action, @key = *args
+    end
+    
+    
+    #
+    # Create controller object & call action
+    #
+    def go
+      controller = Melon[ @module.capitalize ]::Controller.new( @key, @input, @session )
+      
+      if controller.respond_to? @action
+        @output = controller.do( @action )
+        (@session <= @output[:session]).save!
+        @response.body = @output[:content].to_json
+      else
+        
+      end
+      @response['Content-Length'] = @response.body.size.to_s
+      @response['Content-Type'] = 'application/json'
+      
+      @response
+    end
+  end
+  
+  class Document < Hash
+  end
 end
 
 class Object
