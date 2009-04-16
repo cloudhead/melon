@@ -1,0 +1,147 @@
+/* -------------------- --
+ - Diavlo
+-- -------------------- */
+@font-face {
+  font-family: 'Diavlo Black';
+  src: url(http://design.elliottcable.name/typefaces/Diavlo/Diavlo-Black.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Diavlo Bold';
+  src: url(http://design.elliottcable.name/typefaces/Diavlo/Diavlo-Bold.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Diavlo Medium';
+  src: url(http://design.elliottcable.name/typefaces/Diavlo/Diavlo-Medium.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Diavlo Book';
+  src: url(http://design.elliottcable.name/typefaces/Diavlo/Diavlo-Book.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Diavlo Light';
+  src: url(http://design.elliottcable.name/typefaces/Diavlo/Diavlo-Light.otf) format('opentype'); }
+
+
+/* -------------------- --
+ - Fontin
+-- -------------------- */
+@font-face {
+  font-family: 'Fontin Bold';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/Fontin-Bold.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Italic';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/Fontin-Italic.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Small Caps';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/Fontin-SmallCaps.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Regular';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/Fontin-Regular.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Sans Bold';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/FontinSans-Bold.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Sans Bold Italic';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/FontinSans-BoldItalic.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Sans Italic';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/FontinSans-Italic.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Sans Small Caps';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/FontinSans-SmallCaps.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Fontin Sans';
+  src: url(http://design.elliottcable.name/typefaces/Fontin/FontinSans-Regular.otf) format('opentype'); }
+
+/* -------------------- --
+ - Delicious
+-- -------------------- */
+@font-face {
+  font-family: 'Delicious Heavy';
+  src: url(http://design.elliottcable.name/typefaces/Delicious/Delicious-Heavy.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Delicious Bold';
+  src: url(http://design.elliottcable.name/typefaces/Delicious/Delicious-Bold.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Delicious Bold Italic';
+  src: url(http://design.elliottcable.name/typefaces/Delicious/Delicious-BoldItalic.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Delicious Roman';
+  src: url(http://design.elliottcable.name/typefaces/Delicious/Delicious-Roman.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Delicious Italic';
+  src: url(http://design.elliottcable.name/typefaces/Delicious/Delicious-Italic.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Delicious Small Caps';
+  src: url(http://design.elliottcable.name/typefaces/Delicious/Delicious-SmallCaps.otf) format('opentype'); }
+
+/* -------------------- --
+ - Anivers
+-- -------------------- */
+@font-face {
+  font-family: 'Anivers';
+  src: url(http://design.elliottcable.name/typefaces/Anivers/Anivers-Regular.otf) format('opentype'); }
+
+/* -------------------- --
+ - Museo
+-- -------------------- */
+@font-face {
+  font-family: 'Museo 100';
+  src: url(http://design.elliottcable.name/typefaces/Museo/Museo100-Regular.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Museo 300';
+  src: url(http://design.elliottcable.name/typefaces/Museo/Museo300-Regular.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Museo 500';
+  src: url(http://design.elliottcable.name/typefaces/Museo/Museo500-Regular.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Museo 700';
+  src: url(http://design.elliottcable.name/typefaces/Museo/Museo700-Regular.otf) format('opentype'); }
+
+@font-face {
+  font-family: 'Museo 900';
+  src: url(http://design.elliottcable.name/typefaces/Museo/Museo900-Regular.otf) format('opentype'); }
+
+/* -------------------- --
+ - DejaVu
+-- -------------------- */
+@font-face {
+  font-family: 'DejaVu Sans Mono';
+  src: url(http://design.elliottcable.name/typefaces/DejaVu/DejaVuSansMono.ttf) format('truetype'); }
+
+/* -------------------- --
+ - Inconsolata
+-- -------------------- */
+@font-face {
+  font-family: 'Inconsolata';
+  src: url(http://design.elliottcable.name/typefaces/Inconsolata.ttf) format('opentype'); }
+
+/* -------------------- --
+ - Vollkorn
+-- -------------------- */
+@font-face {
+  font-family: 'Vollkorn';
+  src: url(http://design.elliottcable.name/typefaces/Vollkorn.otf) format('opentype'); }
+
+/* -------------------- --
+ - Breip
+-- -------------------- */
+@font-face {
+  font-family: 'Breip';
+  src: url(http://design.elliottcable.name/typefaces/Breip.otf) format('opentype'); }

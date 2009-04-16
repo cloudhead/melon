@@ -1,0 +1,374 @@
+/* tinray.com (c) Alexis Sellier */
+
+
+/* 
+
+	Colors
+
+*/
+
+/* Default: e5e2c8 */
+/* Brighter: 262523 */
+/* Foreground: cccab8 */
+
+/* Basic */
+	body, ul.link a, .bar a, a, q, #by, #options a.active
+{ color: #cccab8; background-color: #232323; }
+
+	#footer hr
+{ border-color: #cccab8; }
+
+/* Inversed */
+	ul.link li a:hover, .debug, textarea:focus, 
+	input:focus, select:focus
+{ background-color: #cccab8; color: #1c1b19; }
+
+	textarea, input, #options a
+{ border-color: #232323; }
+
+	#options a
+{ color: #1c1b19; }
+
+/* Link */
+	a
+{ color: #CFA433; } 
+
+/* Link Alternate */
+	a, label
+{ border-color: #b3b1a1; }
+
+/* Darker */
+	hr, blockquote, .post .note p, *.print, 
+	div#title, h2, #by em, .post h1 + p:first-letter,
+	.post q:after, .post q:before, .comment .author, 
+	#options a.active, .notification
+{ color: #9F9D8A; border-color: #9F9D8A; }
+
+	q, h3, #comment input.button:hover, input.button:hover
+{ border-color: #9F9D8A; }
+
+	textarea, select, input, #options a
+{ background-color: #9F9D8A; }
+
+/* Even Darker */
+	#sidebar, ul.link li a, .post p img, q, .notification
+{ border-color: #5e5c54; }
+	
+	.comment .date
+{ color: #5e5c54; }
+
+/* Darkest */
+	input.button
+{ background-color: #323232; }
+
+
+/* 
+
+	Links
+
+*/
+
+a { 
+	font-family: "Georgia", "Times New Roman"; 
+	font-size: 0.9em; 
+	line-height: 1em;
+	text-decoration: none; 
+	font-variant: small-caps; 
+	border-bottom-width: 1px; 
+	border-bottom-style: solid; 
+}
+a:hover { border-bottom-style: dashed; }
+ul { list-style-type: none; }
+ul.link li a {
+    display: block; 
+    border-width: 0; 
+    border-style: dotted;
+	font-size: 1.4em;
+	border-width: 0.1em 0 0.1em 0;
+	margin: -0.1em;
+	padding: 0.4em;
+}
+ul.link > li:first-child a { border-width: 0 0 0.1em 0; }
+ul.link > li:last-child a { border-width: 0.1em 0 0 0; }
+
+/* 
+
+	Defaults
+
+*/
+
+* { margin: 0 auto; padding: 0; border: 0; }
+
+html { font-size: 100%; }
+
+body {
+	font-family: "Baskerville", "Palatino Linotype", "Times", serif;
+	font-size: 0.625em;
+	text-align: center;
+}
+h1 { 
+	font-family: "Baskerville", "Georgia", "Times New Roman"; 
+	margin: 0em 0em 0.5em 0em; 
+	font-size: 2.2em;
+	font-variant: small-caps;
+	font-weight: normal;
+}
+table { border-collapse: collapse; }
+input, textarea, select { padding: 0.3em; margin: 0.8em 0em 0.8em 0em; border-style: dashed; border-width: 1px; }
+input, textarea, select:focus { outline: none; }
+label { font-size: 16px; font-variant: small-caps; display: block; }
+textarea {}
+select { border-style: solid; }
+
+/* 
+
+	Page Elements
+
+*/
+
+#page {
+	width: 96em;
+	margin: 0 auto;
+	float: left;
+}
+
+#sidebar {
+	width: 308px;
+	padding: 1em 2em 2em 2em;
+	float: left;
+	border-right-width: 0.1em;
+	border-right-style: dashed;
+	text-align: left;
+}
+#sidebar .title { background-repeat: no-repeat; background-position: left; height: 45px; margin: 3em 0em 0.8em 0em; }
+#sidebar #news { background-image: url("images/news.png"); }
+#sidebar #latest { background-image: url("images/latest.png"); }
+#sidebar #archives { background-image: url("images/archives.png"); }
+
+#content {
+	width: 57em;
+	float: right;
+	text-align: center;
+	padding: 2em;
+}
+#comments { display: none; }
+#logo {
+	background-position: center;
+	height: 238px;
+	padding-bottom: 2em;
+	background-repeat: no-repeat;
+	background-image: url("images/tinray_logo.png");
+}
+#logo a { display: block; width: 100%; height: 100%; background-image: inherit; border-style: none; }
+
+#by {
+	text-align: right;
+	font-size: 1.5em;
+	margin: -1em 0em 0em 0em;
+	padding-bottom: 1em;	
+}
+#by em { font-size: 1.2em; }
+
+#footer {
+	clear: both;
+	padding: 2em;
+	text-align: center;
+	bottom: 0;
+}
+#footer hr { height: 0.2em; width: 100%; margin: 3em auto 3em auto; border-width: 0.3em 0em 0.1em 0em;  border-style: solid; }
+
+img.thumbnail { border: 1px black double; padding: 1px; width: 60px; height: 120px }
+
+/* 
+
+	Misc & hr
+
+*/
+
+*.print { font-size: 0.9em; line-height: 1.3em; text-align: justify; }
+*.right { text-align: right; float: right; }
+
+.debug { padding: 1.4em; overflow: auto; margin: 0.5em; text-align: left; font-size: 1.2em; font-family: "Courier"; border-width: 1px; border-style: dashed;}
+
+hr.comment { height: 2px; margin: 1em auto 1em auto; border-bottom-width: 1px; border-style: dotted; }
+hr.double { height: 0.2em; width: 100%; margin: 1em auto 1em auto; border-width: 0.1em 0em 0.1em 0em;  border-style: solid; }
+hr.post { margin: 3.2em auto 3.2em auto; }
+form hr { border-style: dotted; border-width: 1px 0 0 0; }
+
+div.notification { 
+	font-size: 1.5em; 
+	border-bottom-width: 1px; 
+	border-style: dotted; 
+	margin: -2em 0em 1em 0em; 
+	padding: 0.5em 0em 0.5em 0em;
+	font-style: italic;
+}
+
+/*
+
+	Forms & Input
+	
+*/
+
+
+#writer input, #writer textarea, #writer select { font-size: 13px; padding: 0.5em; margin: 1em 0em 1em 0em; }
+
+#writer { text-align: left; padding: 0; margin: 0 auto; }
+#writer fieldset#actions { text-align: right; }
+#writer label { margin: 0em 0em 0em 0em; }
+#writer select { margin-bottom: 1.3em; }
+
+#writer #options {
+	text-align: right;
+	font-size: 0.8em;
+	float: right;
+}
+#options a:hover {
+	border-style: dashed dashed dotted dashed;
+}
+#options a.active { border-style: dotted; border-width: 1px 1px 0px 1px; line-height: 1em; padding: 0.2em 0.5em 0.2em 0.5em; }
+#options a { font-size:1.2em; border-style: dotted; border-width: 1px 1px 1px 1px; line-height: 0.9em; padding: 0.1em 0.5em 0.2em 0.5em; }
+
+#comment fieldset.comment { float: left; text-align: left; }
+#comment fieldset.info { float: right; text-align: left; }
+#comment input, textarea { font-size: 12px; padding: 0.4em; }
+
+#comment input.button, 
+#writer input.button { 
+	font-family: "Georgia", "Times"; 
+	border-style: outset;
+	font-variant: small-caps; 
+	border-width: 1px; 
+	padding: 0.2em 0.8em 0.2em 0.8em;
+	font-size: 1em;
+	color: inherit;
+}
+#auth input { font-size: 2em; text-align: center; }
+#auth input.button { display: none; }
+#writer .post { margin-top: 1.5em; }
+#comment input.button:hover, 
+#writer input.button:hover {
+	border-style: dashed;
+}
+
+#writer input.button { font-size: 1.5em; }
+  
+form label { margin: 0em 0em 0.3em 0em; line-height: 1.35em;}
+
+/* 
+	
+	Posts
+	
+*/
+.post h1 { 
+    font-weight: normal;
+    text-align: center; 
+    margin: 0.6em 0em 1.5em 0em; 
+}
+.post h2 { 
+	text-align: left; 
+	font-size: 1.4em; 
+	letter-spacing: 0.2em; 
+	padding-bottom: 0.2em; 
+	border-style: dotted; 
+	border-width: 0em 0em 0.1em 0em; 
+	font-variant: small-caps; 
+	font-family: 'Times','palatino linotype','times new roman', serif;  
+	margin: 1em 0em 0.5em 0em; 
+}
+.post .date { text-align: center; font-size: 1.5em; font-style: italic; }
+.post p { font-size: 1.5em; line-height: 1.7em; text-align: justify; }
+.post a { font-family: "Baskerville", "Palatino Linotype"; }
+.post p strong { font-weight: 700; }
+.post p em { font-style: italic; }
+
+.post h1 + p:first-letter {
+	font-size: 3.5em;
+	line-height: 1.1em;
+	font-weight: 300;
+	text-transform: uppercase;
+	float: left;
+	margin: 0 0.125em -0.2em 0;
+}
+.post .note p {
+	font-size: 1.2em;
+	line-height: 2.15em;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	
+}
+.post blockquote {
+	text-align: left;
+	font-style: italic;
+	font-family: 'Georgia', 'Times', serif;
+	font-size: 1.2em;
+	line-height: 1.6em;
+	border-left-width: 0.1em; 
+	border-left-style: dotted;
+	margin: 1em 0em 1em 0.2em;
+	padding: 0em 0.6em 0em 1em;
+	quotes: "\201C" "\201D";
+	
+}
+.post blockquote:before { content: "\201C"; font-size: 1.1em; margin-right: 0.2em; }
+.post blockquote:after { content: "\201D"; font-size: 1.1em; margin-left: 0.2em; }
+
+.post q {
+	font-family: 'Baskerville', 'Palatino Linotype';
+	font-style: italic;
+	text-align: center;
+	border-width: 0.05em 0em 0.05em 0em;
+	padding: 0.4em;
+	border-style: dotted;
+	font-size: 2em;
+	display: block;
+	width: 50%;
+	margin: 0.7em auto 0.7em auto;
+}
+.post q:before {
+	content: "\201C";
+	font-size: 1.2em;
+	margin-right: 0.2em;
+}
+.post q:after {
+	content: "\201D";
+	font-size: 1.2em;
+	margin-left: 0.2em;
+	
+}
+.post p img {
+	float: right;
+	margin: 0.5em 0em 0.5em 1em;
+	padding: 0.3em;
+	border-style: double;
+	border-width: 0.1em;
+}
+
+.post .note {
+	float: right;
+	position: relative;
+	margin: 0em -18em 0em 0em;
+	width: 16em;
+	text-align: left;
+	padding: 0em;
+}
+
+/*
+
+	Comments
+
+*/
+
+.comment { text-align: left; clear: both; overflow: auto; }
+.comment .author { font-size: 1.8em; font-style: italic; }
+.comment .date { font-size: 1.2em;  line-height: 2em; }
+.comment .body { width: 28em; font-size: 1.5em; float: right; line-height: 1.5em; text-align: left; }
+.comment .head { width: 13em; padding: 0em 0em 0em 0em; float: left; text-align: right; }
+.comment .controls {
+	float: right;
+	position: relative;
+	margin: 0em 0em 0em 10em;
+	text-align: left;
+	padding: 0em;
+}
