@@ -1,5 +1,5 @@
-public/images/*
-public/html/*
-public/json/*
-public/css/*
+htdocs/images/*
+htdocs/html/*
+htdocs/json/*
+htdocs/css/*
 *.tmproj
