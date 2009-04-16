@@ -59,8 +59,8 @@ module Melon
     class Controller < Base::Controller
       def create
         unless @input.empty?
-          puts "* " + @input['name'] + " is logging in..."
-          thinker = Sky.get @input['name']
+          say "* " + @input['name'] + " is logging in..."
+          user = Sky.get @input['name']
       
           if @input['password'] == thinker['password']
             # Login
@@ -71,15 +71,15 @@ module Melon
             @session[:failed] += 1
           end
         end
-        { session: @session, redirect: self./ }
+        return :session => @session, :redirect => self./
       end
   
       def new
-        { session: @session }
+        return :session => @session
       end
   
       def destroy
-        { session: @session.logout }
+        return :session => @session.logout
       end
   
       def method_missing *args

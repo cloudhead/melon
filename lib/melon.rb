@@ -20,6 +20,8 @@ Dir.chdir('lib/modules') do
 end
 
 module Melon
+  VERBOSE = true
+  
   class Server
     def initialize
       puts "*"
@@ -57,11 +59,11 @@ module Melon
           r :error, :module
         end
       else
-        r :error, :route
+        r :error, :routing
       end
       
-      #puts
-      #puts "* Path: #@module/#@action/#@key"
+      say
+      say "* Path: #@module/#@action/#@key"
       
       self
     end
@@ -70,20 +72,15 @@ module Melon
       @module, @action, @key = *args
     end
     
-    
     #
     # Create controller object & call action
     #
     def go
       controller = Melon[ @module.capitalize ]::Controller.new( @key, @input, @session )
       
-      if controller.respond_to? @action
-        @output = controller.do( @action )
-        (@session <= @output[:session]).save!
-        @response.body = @output[:content].to_json
-      else
-        
-      end
+      @output = controller.do( @action )
+      (@session <= @output[:session]).save!
+      @response.body = @output[:content].to_json
       @response['Content-Length'] = @response.body.size.to_s
       @response['Content-Type'] = 'application/json'
       
@@ -97,24 +94,15 @@ end
 
 class Object
   # Syntactic sugar for const_get()  
-  def self.[]( const )
-    self.const_get( const )
-  end
+  def self.[](const) self.const_get( const ) end
+  def [](const) self.const_get( const ) end
   
-  # For modules
-  def []( const )
-    self.const_get( const )
-  end
-  
-  def null
-    nil.to_json
+  def null() nil.to_json end
+  def say s = ''
+    puts s if Melon::VERBOSE
   end
 end
-
-class String
-  alias each each_line
-end
-
+class String; alias each each_line end
 class Array
   def second; self[1] end
   def third;  self[2] end

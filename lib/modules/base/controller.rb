@@ -3,7 +3,7 @@ module Melon
     class Controller
       attr_reader :session
   
-      def initialize( key = '', params = {}, session )
+      def initialize( key = nil, params = {}, session )
         @key = key
         @input = params
         @session = Melon::Session.new( session )
@@ -16,11 +16,12 @@ module Melon
       # All the CRUD stuff goes through here
       #
       def do action
-        { content: send( action ), session: @session }
+        return :content => @key ? send( action, @key ) : send( action ), 
+               :session => @session
       end
   
       def method_missing *args
-        { error: args.first + "doesn't exist" }
+        return :error => args.first + " doesn't exist"
       end
     end
   end
