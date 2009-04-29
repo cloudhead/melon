@@ -5,8 +5,8 @@ module Melon
         return :error => "Routing error!"
       end
       
-      def module
-        return :error => "Module doesn't exist!"
+      def module m
+        return :error => "Module '#{m}' doesn't exist!"
       end
     end
   end

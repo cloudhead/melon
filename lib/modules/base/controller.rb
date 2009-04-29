@@ -21,7 +21,7 @@ module Melon
       end
   
       def method_missing *args
-        return :error => args.first + " doesn't exist"
+        return :error => args.first.to_s + " is not an action!"
       end
     end
   end

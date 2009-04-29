@@ -47,23 +47,26 @@ module Melon
       
       # Parse route from url
       route = path.
+              split('.')[0].          # Drop .json
               split('/').
-              reject { |i| i.empty? }. # Clear empty strings
-              drop(1)                  # Remove /m/
+              reject { |i| i.empty? } # Clear empty strings
+      
+      route.shift if route.first == 'm' # Drop /m/ if necessary
       
       # Make sure request was an XHR, and the route is valid
       if route.size >= 2 && @request.xhr?
-        if defined? route.first.capitalize
+        if Melon.const_defined? route.first.capitalize
           r *route
         else
-          r :error, :module
+          puts route.first.capitalize + " doesnt exist!"
+          r :error, :module, route.first.capitalize
         end
       else
         r :error, :routing
       end
       
       say
-      say "* Path: #@module/#@action/#@key"
+      say "* Path: #@module/#@action/#@key" + " <= " + path
       
       self
     end
