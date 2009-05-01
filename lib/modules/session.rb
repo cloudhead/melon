@@ -1,7 +1,7 @@
 module Melon
   module Session
-    def self.new(*args)
-      Session::Model.new(*args)
+    def self.new *args
+      Session::Model.new *args
     end
   
     class Model < Hash
@@ -11,16 +11,22 @@ module Melon
         self[:auth] = false
         self[:failed] = 0
     
-        self <= session if session
+        self << session if session
     
         self
       end
   
       # Copy a hash into the session
-      def <= s
+      def merge s
         s.each do |k, v|
           self[ k ] = v
         end
+      end
+      alias << merge
+      
+      def merge! s
+        merge s
+        save!
       end
     
       def god?

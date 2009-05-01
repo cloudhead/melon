@@ -20,8 +20,10 @@ Dir.chdir('lib/modules') do
 end
 
 module Melon
-  VERBOSE = true
-  
+  Verbose = true
+  #
+  # Server
+  #
   class Server
     def initialize
       puts "*"
@@ -33,67 +35,74 @@ module Melon
   
     # Called on each request
     def call env           
-      Router.new( env ).go.finish
+      @request  = Rack::Request.new env
+      @response = Rack::Response.new
+
+      if @request.xhr? # Request has to be XHR, no fucking around
+        @session = Session.new( @request.env['rack.session'] )
+        @route   = Route.new @request.path_info 
+        
+        say
+        say @route.to_s
+        
+        @output = @route.go @request.params, @session # Process the request
+        @session.merge!  @output[:session] # Merge and save!
+        @response.body = @output[:content].to_json
+      else
+        @response.body = { error: "request must be xhr!" }.to_json
+      end
+      
+      @response['Content-Length'] = @response.body.size.to_s
+      @response['Content-Type'] = 'application/json'
+      @response.finish
     end
   end
   
-  class Router
-    def initialize env
-      @request  = Rack::Request.new env
-      @response = Rack::Response.new
-      @session, path, @input = Session.new( @request.env['rack.session'] ), 
-                               @request.path_info,
-                               @request.params
-      
-      # Parse route from url
-      route = path.
-              split('.')[0].          # Drop .json
-              split('/').
-              reject { |i| i.empty? } # Clear empty strings
-      
-      route.shift if route.first == 'm' # Drop /m/ if necessary
-      
-      # Make sure request was an XHR, and the route is valid
-      if route.size >= 2 && @request.xhr?
-        if Melon.const_defined? route.first.capitalize
-          r *route
-        else
-          puts route.first.capitalize + " doesnt exist!"
-          r :error, :module, route.first.capitalize
-        end
-      else
-        r :error, :routing
-      end
-      
-      say
-      say "* Path: #@module/#@action/#@key" + " <= " + path
-      
+  #
+  # Router
+  #
+  class Route
+    attr_reader :module, :action, :key
+
+    def initialize path
+      @path = path
+      @route = @path
+               .split('.').first.split('/')    # Drop .json and split at /
+               .reject {|i| i.empty? }[1..-1]  # Clear empty strings and drop [0]
       self
     end
-    
-    def r *args
-      @module, @action, @key = *args
+
+    def to route
+      @module, @action, @key = *route
     end
     
-    #
-    # Create controller object & call action
-    #
-    def go
-      controller = Melon[ @module.capitalize ]::Controller.new( @key, @input, @session )
+    def go input, session
+      mod = @route.first.capitalize
       
-      @output = controller.do( @action )
-      (@session <= @output[:session]).save!
-      @response.body = @output[:content].to_json
-      @response['Content-Length'] = @response.body.size.to_s
-      @response['Content-Type'] = 'application/json'
-      
-      @response
+      # Check for errors
+      to (if ! Melon.const_defined? mod
+            [:error, :module, mod]
+          elsif ! (2..3) === @route.size
+            [:error, :route]
+          else
+            @route
+          end)
+       
+      # Create a new controller, based on the route, then call the action on it
+      controller = Melon[ @module.capitalize ]::Controller.new @key, input, session
+      controller.do @action
+    end
+
+    def to_s
+      '/' + @route * '/'
     end
   end
   
   class Document < Hash
   end
 end
+
+# CORE CLASSES #
 
 class Object
   # Syntactic sugar for const_get()  
@@ -102,7 +111,7 @@ class Object
   
   def null() nil.to_json end
   def say s = ''
-    puts s if Melon::VERBOSE
+    puts s if Melon::Verbose
   end
 end
 class String; alias each each_line end

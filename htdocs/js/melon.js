@@ -1,63 +1,101 @@
+var Melon = {
+    get: function( url, callback ) 
+    {
+        var buffer = [], i = 0;
+        
+        if( arguments.length == 4 ) {
+            i = arguments[ 2 ]; buffer = arguments[ 3 ];
+        }
+        
+        if( i in url ) $.getJSON( url[ i ], function( json ) { 
+            buffer[ i ] = json;
+            Melon.get( url, callback, ++i, buffer ); 
+        });
+        else callback( buffer );
+    }
+};
+
 $( document ).ready( function() {
-    $.path = {
+    var Path = {
         s: window.location.pathname.toString(),
-        id: window.location.pathname.replace(/\//g,'-').replace(/^-/, '')
+        id: window.location.pathname.replace(/\//g, '-').replace(/^-/, '')
     };
-    
+            
     /* Specify routes */
-    Router.map({ from: "/#/#/#/$", to: "$1-$2-$3-$4.json" },
+    Router.map({ from: "/#/#/#/$", to: ["/posts/$1-$2-$3-$4", 
+                                        "/comments/$1-$2-$3-$4"], page: "single" },
                { from: "/#/#/#",   to: "/posts/archive/$1-$2-$3" },
-               { from: "/",        to: "/posts/frontpage", id: "home"},
+               { from: "/",        to: "/posts/frontpage", page: "home"},
                { from: "/auth",    to: "/login" },
                { from: "/*",       to: "/posts/frontpage" });
-        
-   /* Landing page */
-   if( $.path.s == "/") {
-       $("#comments").hide();
-       $.getJSON("/posts/frontpage.json", function( posts ) {
-   	       for( var i = 0; i < posts.length; i++ ) {
-   	           /* 2009-24-12-the-article => 2009/24/12/the-article */
-               var date = posts[ i ].id.slice( 0, 11 ).replace( /-/g, '/');
-               var title = posts[ i ].id.slice( 11 );
                
-  	           $("#posts ul > li:first").clone().appendTo("#posts ul");  	           
-  	           post( posts[ i ] ).find("h1").wrapInner("<a href='/" + 
-  	           date + title + "'></a>");
-   	       }
-   	       $("#posts ul > li:first").remove();
-       });
-   } 
-   else {
-       /* Posts */
-       $.getJSON("/posts/" + $.path.id + ".json", function( json ) {
-           post( json );
-       });
-       /* Comments */
-       $.getJSON("/comments/" + $.path.id + ".json", function( comments ) {
-           for( var i = 0; i < comments.length; i++ ) {
-   	            $("#comments ul > li:first").clone().appentTo("#comments ul").addClass("comment");
-   	            comment = $("#comments ul > li:last");
-   	            
-   	            for( var key in comments[ i ] ) {
-   	                comment.find('.' + key ).html( comments[ i ][ key ] );
-   	            }
-   	       }
-       });      
-       $("#comments").show();
-   }
+    var route = Router.match( Path.s );    
+    
+    Melon.get( route.path, function( json ) {
+        if( route.page ) $("body").attr("id", route.page ); // Set the body id
+        if( json.length == 1 ) json = json[ 0 ];        
+        Pages[ route.page ]( json );
+    });
+    
+    // for( var i = 0; i < route.path.length; i++ ) {
+    //         $.getJSON( route.path[i], function(json) {
+    //             Pages[ route.]
+    //         });
+    //     }
 });
+function clone( name, input )
+{
+    var element = $("#" + name + " ul > li:first").clone().appendTo("#" + name + " ul");
+    element.attr("id", input.id);
+          
+          for( var key in input ) {
+              element.find('.' + key ).html( input[ key ] );
+          }
+          return element;
+}
+var Pages = {
+    home: function( input )
+    {
+        for( var i = 0; i < input.length; i++ ) {
+           /* 2009-24-12-the-article => 2009/24/12/the-article */
+           var date  = input[ i ].id.slice( 0, 11 ).replace( /-/g, '/');
+           var title = input[ i ].id.slice( 11 );
+       
+           clone("posts", input );
+           post( input[ i ] ).find("h1").wrapInner("<a href='/" + date + title + "'></a>");
+       }
+       $("#posts ul > li:first").remove();
+    },
+    single: function( input )
+    {
+        var posts = input[ 0 ];
+        var comments = input[ 1 ];
+                
+        /* Posts */
+        clone( "posts", posts );
 
+        /* Comments */
+        for( var i = 0; i < comments.length; i++ ) {
+            var comment = clone("comments", comments);
+         }
+         $("#comments ul > li:first").remove(); // automate this
+         $("#posts ul > li:first").remove();    //
+    }
+};
 var Router = {
-    map: function() {
+    map: function() 
+    {
         for( var i = 0; i < arguments.length; i++ ) {
             Router.routes.push( arguments[ i ] ); // Add route to array
         }
     },
-    match: function( path ) {        
+    match: function( path ) 
+    {        
         /* Loop through routes */
         for( var i = 0; i < Router.routes.length; i++ ) { 
             /* Construct regex from route */ 
-            var id = Router.routes[ i ].id;       
+            var page = Router.routes[ i ].page;
+            var to = Router.routes[ i ].to;
             var route = new RegExp( "^\\/?" +
                                     Router.routes[ i ].from.toString().
                                     replace(/#/g, "([0-9]+)").
@@ -67,12 +105,19 @@ var Router = {
                                     "\\/?$");
                                     
             if( path.match( route ) ) {
-                if( id ) $("body").attr("id", id ); // Set the body id
-                return path.replace( route, Router.routes[ i ].to );
+                if( $.isArray( to ) ) {
+                    to = to.map( function( s ) { 
+                        return path.replace( route, s ) + ".json"; 
+                    });
+                }
+                else {
+                    to = [ path.replace( route, to ) + ".json"];
+                }
+                return { path: to, page: page };              
             }
         }
         return false; // If nothing matched, we return false
-    },
+    }
     routes: []
 };
 
@@ -89,31 +134,4 @@ function post( data )
     }
     return post;
 }
-
-$.postJSON = function(url, data, callback) {
-	$.post(url, data, callback, "json");
-};
-
-Array.prototype.map = function ( fn )
-{
-    var a = [];
-    for( var i = 0; i < this.length; i++ ) {
-        a[ i ] = fn( this[ i ] );
-    }
-    return a;
-};
-Array.prototype.compact = function()
-{
-    var len = this.length >>> 0;
-    var res = new Array();
-    
-    for( var i = 0; i < len; i++ ) {
-        if( i in this ) {
-            if( this[ i ] != "") res.push( this[ i ] );
-        }
-    }
-    return res;
-};
-
-
 
