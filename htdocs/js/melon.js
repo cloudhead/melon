@@ -12,14 +12,10 @@ $( document ).ready( function() {
     if( route.page ) $("body").attr("id", route.page ); // Set the body id
     $.each( route.path, function( id, uri ) {
         Melon.get( uri, function( json ) {
-            if( $.isArray( json ) ) {
-                $.each( json, function() { 
-                    Pages[ route.page ]( Melon.clone( id, this ), this ); 
-                });
-            }
-            else { 
-                Pages[ route.page ]( Melon.clone( id, json ), json );
-            }
+            if( ! $.isArray( json ) ) json = [ json ]; // Convert to array
+            $.each( json, function() { 
+                Pages[ route.page ]( Melon.clone( id, this ), this ); 
+            });
             Melon.cleanup( id );
         });
     });
@@ -104,12 +100,12 @@ var Melon = {
     cleanup: function( id )
     {
         return $("#" + id + " ul > li:first").remove();
+    },
+    action: function( caption, module, action, key )
+    {
+        return "<a href='/" + module + "/" + action + "/'>" + caption + "</a>";
     }
 };
 
-function action( caption, module, action, key )
-{
-    return "<a href='/" + module + "/" + action + "/'>" + caption + "</a>";
-}
 
 
